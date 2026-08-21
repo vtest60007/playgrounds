@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Healthcare Appointment Testing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Healthcare Appointment Simulation</h1>
+  <p>Practice black box testing techniques on this appointment booking form.</p>
+
+  <form id="healthForm">
+    <label>
+      Patient Name:
+      <input type="text" id="name" name="name" required>
+    </label>
+
+    <label>
+      Age (1–120):
+      <input type="number" id="age" name="age" required>
+    </label>
+
+    <label>
+      Appointment Date:
+      <input type="date" id="date" name="date" required>
+    </label>
+
+    <label>
+      Appointment Type:
+      <select id="type" name="type">
+        <option value="">--Choose--</option>
+        <option value="general">General</option>
+        <option value="specialist">Specialist</option>
+        <option value="emergency">Emergency</option>
+      </select>
+    </label>
+
+    <label>
+      Time Slot:
+      <select id="slot" name="slot">
+        <option value="">--Choose--</option>
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="night">Night</option>
+      </select>
+    </label>
+
+    <button type="submit">Book Appointment</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('healthForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const age = parseInt(document.getElementById('age').value, 10);
+      const date = document.getElementById('date').value;
+      let type = document.getElementById('type').value;
+      const slot = document.getElementById('slot').value;
+
+      let message = "";
+
+      // Boundary Value
+      if (age < 1 || age > 120) {
+        message += "❌ Age out of range.<br>";
+      }
+
+      // Equivalence Partitioning
+      if (type !== "general" && type !== "specialist" && type !== "emergency") {
+        message += "❌ Invalid appointment type.<br>";
+      }
+
+      // Error Guessing
+      if (name.trim() === "") {
+        message += "❌ Patient name required.<br>";
+      }
+      const today = new Date().toISOString().split("T")[0];
+      if (date < today) {
+        message += "❌ Appointment date cannot be in the past.<br>";
+      }
+
+      // Decision Table
+      if (type === "general" && slot === "night") {
+        message += "❌ General appointments not allowed at night.<br>";
+      }
+      if (type === "" || slot === "") {
+        message += "❌ Appointment type or slot not selected.<br>";
+      }
+
+      // Hidden Defect: Specialist bug
+      if (type === "specialist" && slot === "afternoon") {
+        type = "general"; // BUG
+      }
+
+      if (message === "") {
+        message = "✅ Appointment booked!<br>" +
+                  "Patient: " + name + "<br>" +
+                  "Age: " + age + "<br>" +
+                  "Date: " + date + "<br>" +
+                  "Type: " + type + "<br>" +
+                  "Slot: " + slot;
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
