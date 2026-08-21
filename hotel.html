@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel Booking Testing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Hotel Booking Simulation</h1>
+  <p>Practice black box testing techniques on this hotel booking form.</p>
+
+  <form id="hotelForm">
+    <label>
+      Guest Name:
+      <input type="text" id="name" name="name" required>
+    </label>
+
+    <label>
+      Check-in Date:
+      <input type="date" id="checkin" name="checkin" required>
+    </label>
+
+    <label>
+      Nights (1–30):
+      <input type="number" id="nights" name="nights" required>
+    </label>
+
+    <label>
+      Room Type:
+      <select id="room" name="room">
+        <option value="">--Choose--</option>
+        <option value="standard">Standard</option>
+        <option value="deluxe">Deluxe</option>
+        <option value="suite">Suite</option>
+      </select>
+    </label>
+
+    <label>
+      Payment Method:
+      <select id="payment" name="payment">
+        <option value="">--Choose--</option>
+        <option value="card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cod">Cash on Delivery</option>
+      </select>
+    </label>
+
+    <button type="submit">Book Room</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('hotelForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const checkin = document.getElementById('checkin').value;
+      let nights = parseInt(document.getElementById('nights').value, 10);
+      const room = document.getElementById('room').value;
+      const payment = document.getElementById('payment').value;
+
+      let message = "";
+
+      // Boundary Value
+      if (nights < 1 || nights > 30) {
+        message += "❌ Nights out of range.<br>";
+      }
+
+      // Equivalence Partitioning
+      if (room !== "standard" && room !== "deluxe" && room !== "suite") {
+        message += "❌ Invalid room type.<br>";
+      }
+
+      // Error Guessing
+      if (name.trim() === "") {
+        message += "❌ Guest name required.<br>";
+      }
+      const today = new Date().toISOString().split("T")[0];
+      if (checkin < today) {
+        message += "❌ Check-in date cannot be in the past.<br>";
+      }
+
+      // Decision Table
+      if (room === "suite" && payment === "cod") {
+        message += "❌ COD not allowed for Suite.<br>";
+      }
+      if (room === "" || payment === "") {
+        message += "❌ Room type or payment not selected.<br>";
+      }
+
+      // Hidden Defect: nights bug
+      if (nights === 30) {
+        nights = 31; // BUG
+      }
+
+      if (message === "") {
+        message = "✅ Booking successful!<br>" +
+                  "Guest: " + name + "<br>" +
+                  "Check-in: " + checkin + "<br>" +
+                  "Nights Charged: " + nights + "<br>" +
+                  "Room: " + room + "<br>" +
+                  "Payment: " + payment;
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
