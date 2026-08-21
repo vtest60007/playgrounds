@@ -1,0 +1,111 @@
+## 🧩 Playground Scenarios & Requirements
+
+### 1. **Form Validation Playground (`index.html`)**
+- Age field must only accept values between 18 and 60.  
+- Email must contain “@” and a valid domain.  
+- Password must be at least 6 characters and include a number.  
+- Payment + Shipping combinations must follow rules (e.g., COD not allowed with Express).  
+- Order states must follow valid progression (New → Processing → Shipped → Delivered).  
+
+
+---
+
+### 2. **Shopping Cart Checkout (`shopping.html`)**
+- Quantity must be between 1 and 10.  
+- Coupon codes must begin with “SAVE”.  
+- Checkout requires both payment and delivery selections.  
+- Certain payment + delivery combinations are invalid (e.g., COD + Same Day).  
+- Cart flow must follow proper sequence (Cart → Checkout → Payment → Confirmation).  
+  
+
+---
+
+### 3. **Login & Role-Based Access (`login.html`)**
+- Username must be 5–12 characters.  
+- Password must be 6–10 characters and include at least one digit.  
+- Admin role requires special password format (`@admin`).  
+- User role requires numeric password.  
+- Login/logout must follow valid sequence.  
+
+
+---
+
+### 4. **Flight Booking (`flight.html`)**
+- Passenger count must be between 1 and 5.  
+- Departure and arrival cities must be different.  
+- Travel date cannot be in the past.  
+- Certain seat class + payment combinations are invalid (e.g., Business + COD).  
+- Booking flow must follow proper sequence (Search → Select → Payment → Confirmation).  
+
+
+---
+
+### 5. **Banking Transaction (`banking.html`)**
+- Withdrawal amount must be between 100 and 10,000.  
+- Transaction type must be Deposit or Withdrawal.  
+- Savings account withdrawals cannot exceed 5000.  
+- Account state must follow proper lifecycle (Active → Transaction → Updated Balance → Closed).  
+
+
+---
+
+### 6. **Healthcare Appointment (`healthcare.html`)**
+- Patient age must be between 1 and 120.  
+- Appointment type must be General, Specialist, or Emergency.  
+- Appointment date cannot be in the past.  
+- Certain appointment type + time slot combinations are invalid (e.g., General + Night).  
+- Appointment lifecycle must follow proper sequence (Registered → Scheduled → Checked In → Completed).  
+ 
+
+---
+
+### 7. **Exam Registration (`exam.html`)**
+- Student age must be between 10 and 25.  
+- Subject must be Math, Science, or English.  
+- Exam date cannot be in the past.  
+- Certain subject + exam type combinations are invalid (e.g., Science must be Offline).  
+- Exam lifecycle must follow proper sequence (Registered → Payment → Admit Card → Exam Taken).  
+
+
+---
+
+### 8. **Hotel Booking (`hotel.html`)**
+- Nights must be between 1 and 30.  
+- Room type must be Standard, Deluxe, or Suite.  
+- Check-in date cannot be in the past.  
+- Certain room type + payment combinations are invalid (e.g., Suite + COD).  
+- Booking lifecycle must follow proper sequence (Reserved → Checked In → Checked Out → Completed).  
+
+
+---
+
+### 9. **Library Borrowing (`library.html`)**
+- Borrow duration must be between 1 and 30 days.  
+- Book category must be Fiction, Non-Fiction, or Reference.  
+- Borrow date cannot be in the past.  
+- Certain category + duration combinations are invalid (e.g., Reference ≤ 7 days).  
+- Borrow lifecycle must follow proper sequence (Borrowed → Returned → Overdue → Closed).  
+ 
+
+---
+
+### 10. **Restaurant Reservation (`restaurant.html`)**
+- Guest count must be between 1 and 20.  
+- Reservation type must be Lunch, Dinner, or Private Event.  
+- Reservation date cannot be in the past.  
+- Certain reservation type + payment combinations are invalid (e.g., Event + COD).  
+- Reservation lifecycle must follow proper sequence (Reserved → Seated → Served → Completed).  
+
+
+---
+
+### 11. **Transport Ticket Booking (`transport.html`)**
+- Passenger count must be between 1 and 6.  
+- Route type must be Local, Express, or Interstate.  
+- Travel date cannot be in the past.  
+- Certain route type + payment combinations are invalid (e.g., Express + COD).  
+- Ticket lifecycle must follow proper sequence (Booked → Payment → Confirmed → Boarded → Completed).  
+
+
+---
+
