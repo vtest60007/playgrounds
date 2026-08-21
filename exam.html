@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exam Registration Testing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Exam Registration Simulation</h1>
+  <p>Practice black box testing techniques on this exam registration form.</p>
+
+  <form id="examForm">
+    <label>
+      Student Name:
+      <input type="text" id="name" name="name" required>
+    </label>
+
+    <label>
+      Age (10–25):
+      <input type="number" id="age" name="age" required>
+    </label>
+
+    <label>
+      Exam Date:
+      <input type="date" id="date" name="date" required>
+    </label>
+
+    <label>
+      Subject:
+      <select id="subject" name="subject">
+        <option value="">--Choose--</option>
+        <option value="math">Math</option>
+        <option value="science">Science</option>
+        <option value="english">English</option>
+      </select>
+    </label>
+
+    <label>
+      Exam Type:
+      <select id="type" name="type">
+        <option value="">--Choose--</option>
+        <option value="online">Online</option>
+        <option value="offline">Offline</option>
+      </select>
+    </label>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('examForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const age = parseInt(document.getElementById('age').value, 10);
+      const date = document.getElementById('date').value;
+      let subject = document.getElementById('subject').value;
+      const type = document.getElementById('type').value;
+
+      let message = "";
+
+      // Boundary Value
+      if (age < 10 || age > 25) {
+        message += "❌ Age out of range.<br>";
+      }
+
+      // Equivalence Partitioning
+      if (subject !== "math" && subject !== "science" && subject !== "english") {
+        message += "❌ Invalid subject.<br>";
+      }
+
+      // Error Guessing
+      if (name.trim() === "") {
+        message += "❌ Student name required.<br>";
+      }
+      const today = new Date().toISOString().split("T")[0];
+      if (date < today) {
+        message += "❌ Exam date cannot be in the past.<br>";
+      }
+
+      // Decision Table
+      if (subject === "science" && type === "online") {
+        message += "❌ Science exam must be offline.<br>";
+      }
+      if (subject === "" || type === "") {
+        message += "❌ Subject or exam type not selected.<br>";
+      }
+
+      // Hidden Defect: Science bug
+      if (subject === "science" && type === "offline") {
+        subject = "online"; // BUG
+      }
+
+      if (message === "") {
+        message = "✅ Registration successful!<br>" +
+                  "Student: " + name + "<br>" +
+                  "Age: " + age + "<br>" +
+                  "Date: " + date + "<br>" +
+                  "Subject: " + subject + "<br>" +
+                  "Exam Type: " + type;
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
