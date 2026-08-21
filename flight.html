@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flight Booking Testing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Flight Booking Simulation</h1>
+  <p>Practice black box testing techniques on this flight booking form.</p>
+
+  <form id="flightForm">
+    <label>
+      Departure City:
+      <input type="text" id="departure" name="departure" required>
+    </label>
+
+    <label>
+      Arrival City:
+      <input type="text" id="arrival" name="arrival" required>
+    </label>
+
+    <label>
+      Travel Date:
+      <input type="date" id="date" name="date" required>
+    </label>
+
+    <label>
+      Passengers (1–5):
+      <input type="number" id="passengers" name="passengers" required>
+    </label>
+
+    <label>
+      Seat Class:
+      <select id="seat" name="seat">
+        <option value="">--Choose--</option>
+        <option value="economy">Economy</option>
+        <option value="business">Business</option>
+        <option value="first">First Class</option>
+      </select>
+    </label>
+
+    <label>
+      Payment Method:
+      <select id="payment" name="payment">
+        <option value="">--Choose--</option>
+        <option value="card">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="cod">Cash on Delivery</option>
+      </select>
+    </label>
+
+    <button type="submit">Book Flight</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('flightForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const departure = document.getElementById('departure').value;
+      const arrival = document.getElementById('arrival').value;
+      const date = document.getElementById('date').value;
+      const passengers = parseInt(document.getElementById('passengers').value, 10);
+      const seat = document.getElementById('seat').value;
+      const payment = document.getElementById('payment').value;
+
+      let message = "";
+
+      // Boundary Value
+      if (passengers < 1 || passengers > 5) {
+        message += "❌ Passengers out of range.<br>";
+      }
+
+      // Equivalence Partitioning
+      if (departure.toLowerCase() === arrival.toLowerCase()) {
+        message += "❌ Departure and arrival cannot be the same.<br>";
+      }
+
+      // Error Guessing
+      const today = new Date().toISOString().split("T")[0];
+      if (date < today) {
+        message += "❌ Travel date cannot be in the past.<br>";
+      }
+
+      // Decision Table
+      if (seat === "business" && payment === "cod") {
+        message += "❌ COD not allowed for Business class.<br>";
+      }
+      if (seat === "" || payment === "") {
+        message += "❌ Seat class or payment not selected.<br>";
+      }
+
+      // Hidden Defect: passengers bug
+      let chargedPassengers = passengers;
+      if (passengers === 5) {
+        chargedPassengers = 6; // BUG
+      }
+
+      if (message === "") {
+        message = "✅ Booking successful!<br>" +
+                  "From: " + departure + "<br>" +
+                  "To: " + arrival + "<br>" +
+                  "Date: " + date + "<br>" +
+                  "Passengers Charged: " + chargedPassengers + "<br>" +
+                  "Seat: " + seat + "<br>" +
+                  "Payment: " + payment;
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
