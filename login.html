@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Flow Testing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Login Simulation</h1>
+  <p>Practice black box testing techniques on this login flow.</p>
+
+  <form id="loginForm">
+    <label>
+      Username (5–12 chars):
+      <input type="text" id="username" name="username" required>
+    </label>
+
+    <label>
+      Password (6–10 chars, must include digit):
+      <input type="password" id="password" name="password" required>
+    </label>
+
+    <label>
+      Role:
+      <select id="role" name="role">
+        <option value="">--Choose--</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </label>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+
+      let message = "";
+
+      // Boundary Value
+      if (username.length < 5 || username.length > 12) {
+        message += "❌ Username length invalid.<br>";
+      }
+      if (password.length < 6 || password.length > 10) {
+        message += "❌ Password length invalid.<br>";
+      }
+
+      // Equivalence Partitioning
+      if (!/\d/.test(password)) {
+        message += "❌ Password must contain a digit.<br>";
+      }
+
+      // Decision Table
+      if (role === "admin" && !password.includes("@admin")) {
+        message += "❌ Admin role requires '@admin' in password.<br>";
+      }
+      if (role === "user" && !/\d/.test(password)) {
+        message += "❌ User role requires digit in password.<br>";
+      }
+      if (role === "") {
+        message += "❌ Role not selected.<br>";
+      }
+
+      // Hidden Defect: Admin bypass
+      if (username === "admin123") {
+        message = "⚠️ BUG: Admin access granted without proper validation!<br>";
+      }
+
+      if (message === "") {
+        message = "✅ Login successful!<br>Role: " + role;
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
