@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Banking Transaction Testing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Banking Transaction Simulation</h1>
+  <p>Practice black box testing techniques on this banking form.</p>
+
+  <form id="bankForm">
+    <label>
+      Account Type:
+      <select id="account" name="account">
+        <option value="">--Choose--</option>
+        <option value="savings">Savings</option>
+        <option value="current">Current</option>
+      </select>
+    </label>
+
+    <label>
+      Transaction Type:
+      <select id="transaction" name="transaction">
+        <option value="">--Choose--</option>
+        <option value="deposit">Deposit</option>
+        <option value="withdrawal">Withdrawal</option>
+      </select>
+    </label>
+
+    <label>
+      Amount (100–10,000):
+      <input type="number" id="amount" name="amount" required>
+    </label>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('bankForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const account = document.getElementById('account').value;
+      const transaction = document.getElementById('transaction').value;
+      const amount = parseInt(document.getElementById('amount').value, 10);
+
+      let message = "";
+
+      // Boundary Value
+      if (amount < 100 || amount > 10000) {
+        message += "❌ Amount out of range.<br>";
+      }
+
+      // Equivalence Partitioning
+      if (transaction !== "deposit" && transaction !== "withdrawal") {
+        message += "❌ Invalid transaction type.<br>";
+      }
+
+      // Decision Table
+      if (account === "savings" && transaction === "withdrawal" && amount > 5000) {
+        message += "❌ Savings withdrawal cannot exceed 5000.<br>";
+      }
+      if (account === "" || transaction === "") {
+        message += "❌ Account or transaction not selected.<br>";
+      }
+
+      // Hidden Defect: withdrawal bug
+      let deducted = amount;
+      if (transaction === "withdrawal" && amount === 10000) {
+        deducted = 11000; // BUG
+      }
+
+      if (message === "") {
+        if (transaction === "deposit") {
+          message = "✅ Deposit successful!<br>Amount: " + amount;
+        } else {
+          message = "✅ Withdrawal successful!<br>Deducted: " + deducted;
+        }
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+  </script>
+</body>
+</html>
