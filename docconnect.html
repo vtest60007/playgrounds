@@ -9,7 +9,8 @@
     label { display: block; margin-top: 10px; }
     input, select { padding: 6px; margin-top: 4px; width: 250px; }
     button { margin-top: 15px; padding: 8px 16px; }
-    .output { margin-top: 20px; font-weight: bold; color: #e74c3c; }
+    .output { margin-top: 20px; font-weight: bold; color: #2c3e50; }
+    .error { color: #e74c3c; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -62,6 +63,23 @@
   <div class="output" id="output"></div>
 
   <script>
+    // Mock doctor data
+    const doctors = [
+      { firstName: "Arun", lastName: "Kumar", city: "Chennai", specialization: "Cardiology", locality: "Anna Nagar", gender: "Male" },
+      { firstName: "Priya", lastName: "Raman", city: "Chennai", specialization: "Orthopedics", locality: "T Nagar", gender: "Female" },
+      { firstName: "Suresh", lastName: "Babu", city: "Coimbatore", specialization: "Cardiology", locality: "RS Puram", gender: "Male" },
+      { firstName: "Meena", lastName: "Iyer", city: "Coimbatore", specialization: "Orthopedics", locality: "Peelamedu", gender: "Female" },
+      { firstName: "Ravi", lastName: "Shankar", city: "Madurai", specialization: "Cardiology", locality: "KK Nagar", gender: "Male" },
+      { firstName: "Lakshmi", lastName: "Narayan", city: "Madurai", specialization: "Orthopedics", locality: "Tallakulam", gender: "Female" },
+      { firstName: "Deepa", lastName: "Krishnan", city: "Chennai", specialization: "Cardiology", locality: "Velachery", gender: "Female" },
+      { firstName: "Vijay", lastName: "Menon", city: "Coimbatore", specialization: "Orthopedics", locality: "Gandhipuram", gender: "Male" }
+    ];
+
+    // Utility validation function
+    function isAlphabetic(value) {
+      return /^[A-Za-z]+$/.test(value);
+    }
+
     document.getElementById('doctorForm').addEventListener('submit', function(e){
       e.preventDefault();
       const city = document.getElementById('city').value;
@@ -74,32 +92,53 @@
       let message = "";
 
       // Validation rules
-      if(!/^[A-Za-z]+$/.test(firstName)) message += "❌ First Name must be alphabetic.<br>";
-      if(!/^[A-Za-z]+$/.test(lastName)) message += "❌ Last Name must be alphabetic.<br>";
-      if(!/^[A-Za-z]+$/.test(locality)) message += "❌ Locality must be alphabetic.<br>";
+      if(!isAlphabetic(firstName)) message += "❌ First Name must be alphabetic.<br>";
+      if(firstName.length > 30) message += "❌ First Name exceeds 30 characters.<br>";
+      if(!isAlphabetic(lastName)) message += "❌ Last Name must be alphabetic.<br>";
+      if(lastName.length > 30) message += "❌ Last Name exceeds 30 characters.<br>";
+      if(!isAlphabetic(locality)) message += "❌ Locality must be alphabetic.<br>";
 
       if(message==="") {
-        // Intentional defect: Cardiology returns wrong specialization
-        let resultSpecialization = specialization;
-        if(specialization==="Cardiology") resultSpecialization="Orthopedics"; // defect
+        let results = doctors.filter(doc => {
+          return (!city || doc.city === city) &&
+                 (!specialization || specialization === "No Preference" || doc.specialization === specialization) &&
+                 (!firstName || doc.firstName.toLowerCase().includes(firstName.toLowerCase())) &&
+                 (!lastName || doc.lastName.toLowerCase().includes(lastName.toLowerCase())) &&
+                 (!locality || doc.locality.toLowerCase().includes(locality.toLowerCase())) &&
+                 (!gender || gender === "Both" || doc.gender === gender);
+        });
 
-        message = "✅ Search executed.<br>Showing doctors of specialization: " + resultSpecialization;
+        message = results.length > 0 
+          ? "✅ Results:<br>" + results.map(d => `${d.firstName} ${d.lastName} (${d.specialization}, ${d.city}, ${d.locality}, ${d.gender})`).join("<br>")
+          : "❌ No matching doctors found.";
       }
 
       document.getElementById('output').innerHTML = message;
     });
 
     document.getElementById('listAll').addEventListener('click', function(){
-      document.getElementById('output').innerHTML = "✅ Listing all doctors.";
+      document.getElementById('output').innerHTML = "✅ Listing all doctors:<br>" + 
+        doctors.map(d => `${d.firstName} ${d.lastName} (${d.specialization}, ${d.city}, ${d.locality}, ${d.gender})`).join("<br>");
     });
 
     document.getElementById('browseCategory').addEventListener('click', function(){
-      // Intentional defect: No response
-      document.getElementById('output').innerHTML = ""; 
+      let grouped = {};
+      doctors.forEach(doc => {
+        if(!grouped[doc.specialization]) grouped[doc.specialization] = [];
+        grouped[doc.specialization].push(doc);
+      });
+      let message = "✅ Doctors by Specialization:<br>";
+      for(let spec in grouped){
+        message += `<b>${spec}</b>:<br>` + grouped[spec].map(d => `${d.firstName} ${d.lastName} (${d.city}, ${d.locality}, ${d.gender})`).join("<br>") + "<br><br>";
+      }
+      document.getElementById('output').innerHTML = message;
     });
 
     document.getElementById('listWomen').addEventListener('click', function(){
-      document.getElementById('output').innerHTML = "✅ Listing all women doctors.";
+      let women = doctors.filter(doc => doc.gender === "Female");
+      document.getElementById('output').innerHTML = women.length > 0 
+        ? "✅ Listing all women doctors:<br>" + women.map(d => `${d.firstName} ${d.lastName} (${d.specialization}, ${d.city}, ${d.locality})`).join("<br>")
+        : "❌ No women doctors found.";
     });
   </script>
 </body>
