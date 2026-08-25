@@ -1,0 +1,39 @@
+# 📘 Test Strategy Document – DocConnect Application
+
+## 1. Introduction
+The Test Strategy defines the overall approach to testing the DocConnect application, ensuring quality, reliability, and compliance with requirements.
+
+## 2. Objectives
+- Validate functional requirements (search filters, buttons, validations).
+- Ensure defect-free build before release.
+- Provide measurable quality metrics (defect density, coverage).
+
+## 3. Scope
+- **In Scope**: Functional testing, validation rules, UI behavior, smoke, sanity, regression testing.
+- **Out of Scope**: Performance testing, security penetration testing, integration with external systems.
+
+## 4. Testing Types
+- **Smoke Testing**: Verify critical functionality (Search, List All Doctors, Browse By Category).
+- **Sanity Testing**: Validate defect fixes (Cardiology specialization, First Name validation, Browse By Category button).
+- **Functional Testing**: Validate all requirements (TC01–TC12).
+- **Regression Testing**: Ensure fixes do not break existing functionality.
+- **Negative Testing**: Validate error handling for invalid inputs.
+
+## 5. Test Design Techniques
+- **Equivalence Partitioning**: Valid vs invalid inputs (alphabetic vs numeric).
+- **Boundary Value Analysis**: Text length (30 vs 31 characters).
+- **Error Guessing**: Missing mandatory fields, invalid gender selection.
+
+## 6. Entry & Exit Criteria
+- **Entry**: Requirements finalized, test environment ready, test cases prepared.
+- **Exit**: All planned test cases executed, critical defects resolved, defect density < 0.05.
+
+## 7. Deliverables
+- Test Scenarios
+- Test Cases
+- Defect Logs
+- Traceability Matrix
+- Test Summary Report
+
+
+

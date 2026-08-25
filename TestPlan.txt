@@ -1,0 +1,71 @@
+# 📘  Test Plan – DocConnect Application
+
+## 1. Test Plan ID  
+DocConnect_TP_V1.1  
+
+## 2. Introduction  
+Outlines scope, approach, resources, and schedule for testing the DocConnect application.  
+
+## 3. Features to be Tested  
+- City dropdown  
+- Specialization dropdown  
+- First Name, Last Name, Locality textboxes  
+- Gender radio buttons  
+- Search button  
+- List All Doctors button  
+- Browse By Category button  
+- List All Women Doctors button  
+
+## 4. Features Not to be Tested  
+- Backend database performance  
+- Security penetration  
+- Non-functional aspects beyond usability  
+
+## 5. Approach  
+- Manual black-box testing.  
+- Smoke → Sanity → Regression cycle.  
+- Defect logging in standard format.  
+- **Automation Scope**: Regression cases (TC01–TC12) identified for future automation.  
+
+## 6. Test Environment  
+- Browsers: Chrome, Edge, Firefox (latest versions).  
+- OS: Windows 10.  
+- Prototype: HTML page simulating DocConnect UI.  
+- Test Data: Sample doctor records for Chennai, Coimbatore, Madurai.  
+
+## 7. Test Cases  
+- Total: 12 functional test cases (TC01–TC12).  
+- Smoke: ST01–ST05.  
+- Sanity: SN01–SN05.  
+- Regression: All functional cases after fixes.  
+
+## 8. Schedule  
+- Requirement Analysis: Day 1–2  
+- Test Case Design: Day 3–4  
+- Environment Setup: Day 5  
+- Execution (Smoke + Sanity): Day 6–7  
+- Regression: Day 8–10  
+- Closure & Reporting: Day 11  
+
+## 9. Risks & Mitigation  
+- **Limited test data** → Create synthetic records.  
+- **UI prototype differences** → Align with dev team for updates.  
+- **Delayed defect fixes** → Adjust regression schedule.  
+- **Resource constraints** → Assign backup testers.  
+
+## 10. Resources & Roles  
+- QA Lead: Test planning, reporting.  
+- Test Engineers: Execute cases, log defects.  
+- Developer Support: Fix defects, provide builds.  
+
+## 11. Deliverables  
+- Test Strategy Document  
+- Test Plan Document  
+- Test Cases  
+- Defect Logs  
+- Traceability Matrix  
+- Test Summary Report  
+- Defect Density Report  
+- Coverage Metrics Report  
+
+
