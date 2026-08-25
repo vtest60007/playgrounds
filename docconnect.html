@@ -63,8 +63,21 @@
   <div class="output" id="output"></div>
 
   <script>
+    // Mock doctor data
+    const doctors = [
+      { firstName: "Arun", lastName: "Kumar", city: "Chennai", specialization: "Cardiology", locality: "Anna Nagar", gender: "Male" },
+      { firstName: "Priya", lastName: "Raman", city: "Chennai", specialization: "Orthopedics", locality: "T Nagar", gender: "Female" },
+      { firstName: "Suresh", lastName: "Babu", city: "Coimbatore", specialization: "Cardiology", locality: "RS Puram", gender: "Male" },
+      { firstName: "Meena", lastName: "Iyer", city: "Coimbatore", specialization: "Orthopedics", locality: "Peelamedu", gender: "Female" },
+      { firstName: "Ravi", lastName: "Shankar", city: "Madurai", specialization: "Cardiology", locality: "KK Nagar", gender: "Male" },
+      { firstName: "Lakshmi", lastName: "Narayan", city: "Madurai", specialization: "Orthopedics", locality: "Tallakulam", gender: "Female" },
+      { firstName: "Deepa", lastName: "Krishnan", city: "Chennai", specialization: "Cardiology", locality: "Velachery", gender: "Female" },
+      { firstName: "Vijay", lastName: "Menon", city: "Coimbatore", specialization: "Orthopedics", locality: "Gandhipuram", gender: "Male" }
+    ];
+
     document.getElementById('doctorForm').addEventListener('submit', function(e){
       e.preventDefault();
+      const city = document.getElementById('city').value;
       const specialization = document.getElementById('specialization').value;
       const firstName = document.getElementById('firstName').value;
       const lastName = document.getElementById('lastName').value;
@@ -82,14 +95,27 @@
         let resultSpecialization = specialization;
         if(specialization==="Cardiology") resultSpecialization="Orthopedics";
 
-        message = "✅ Search executed.<br>Showing doctors of specialization: " + resultSpecialization;
+        // Filter mock data (but specialization defect applied)
+        let results = doctors.filter(doc => {
+          return (!city || doc.city === city) &&
+                 (!specialization || specialization === "No Preference" || doc.specialization === resultSpecialization) &&
+                 (!firstName || doc.firstName.toLowerCase().includes(firstName.toLowerCase())) &&
+                 (!lastName || doc.lastName.toLowerCase().includes(lastName.toLowerCase())) &&
+                 (!locality || doc.locality.toLowerCase().includes(locality.toLowerCase())) &&
+                 (!gender || gender === "Both" || doc.gender === gender);
+        });
+
+        message = results.length > 0 
+          ? "✅ Results:<br>" + results.map(d => `${d.firstName} ${d.lastName} (${d.specialization}, ${d.city}, ${d.locality}, ${d.gender})`).join("<br>")
+          : "❌ No matching doctors found.";
       }
 
       document.getElementById('output').innerHTML = message;
     });
 
     document.getElementById('listAll').addEventListener('click', function(){
-      document.getElementById('output').innerHTML = "✅ Listing all doctors.";
+      document.getElementById('output').innerHTML = "✅ Listing all doctors:<br>" + 
+        doctors.map(d => `${d.firstName} ${d.lastName} (${d.specialization}, ${d.city}, ${d.locality}, ${d.gender})`).join("<br>");
     });
 
     document.getElementById('browseCategory').addEventListener('click', function(){
@@ -98,7 +124,10 @@
     });
 
     document.getElementById('listWomen').addEventListener('click', function(){
-      document.getElementById('output').innerHTML = "✅ Listing all women doctors.";
+      let women = doctors.filter(doc => doc.gender === "Female");
+      document.getElementById('output').innerHTML = women.length > 0 
+        ? "✅ Listing all women doctors:<br>" + women.map(d => `${d.firstName} ${d.lastName} (${d.specialization}, ${d.city}, ${d.locality})`).join("<br>")
+        : "❌ No women doctors found.";
     });
   </script>
 </body>
