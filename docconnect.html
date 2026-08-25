@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DocConnect Application</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h1 { color: #2c3e50; }
+    label { display: block; margin-top: 10px; }
+    input, select { padding: 6px; margin-top: 4px; width: 250px; }
+    button { margin-top: 15px; padding: 8px 16px; }
+    .output { margin-top: 20px; font-weight: bold; color: #e74c3c; }
+  </style>
+</head>
+<body>
+  <h1>DocConnect Application</h1>
+
+  <form id="doctorForm">
+    <label>City:
+      <select id="city" required>
+        <option value="">--Choose--</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Coimbatore">Coimbatore</option>
+        <option value="Madurai">Madurai</option>
+      </select>
+    </label>
+
+    <label>Specialization:
+      <select id="specialization" required>
+        <option value="">--Choose--</option>
+        <option value="No Preference">No Preference</option>
+        <option value="Cardiology">Cardiology</option>
+        <option value="Orthopedics">Orthopedics</option>
+      </select>
+    </label>
+
+    <label>First Name:
+      <input type="text" id="firstName" maxlength="30" required>
+    </label>
+
+    <label>Last Name:
+      <input type="text" id="lastName" maxlength="30" required>
+    </label>
+
+    <label>Locality:
+      <input type="text" id="locality" required>
+    </label>
+
+    <label>Gender:
+      <input type="radio" name="gender" value="Male" required> Male
+      <input type="radio" name="gender" value="Female"> Female
+      <input type="radio" name="gender" value="Both"> Both
+    </label>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <button id="listAll">List All Doctors</button>
+  <button id="browseCategory">Browse By Category</button>
+  <button id="listWomen">List All Women Doctors</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    document.getElementById('doctorForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const city = document.getElementById('city').value;
+      const specialization = document.getElementById('specialization').value;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const locality = document.getElementById('locality').value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+
+      let message = "";
+
+      // Validation rules
+      if(!/^[A-Za-z]+$/.test(firstName)) message += "❌ First Name must be alphabetic.<br>";
+      if(!/^[A-Za-z]+$/.test(lastName)) message += "❌ Last Name must be alphabetic.<br>";
+      if(!/^[A-Za-z]+$/.test(locality)) message += "❌ Locality must be alphabetic.<br>";
+
+      if(message==="") {
+        // Intentional defect: Cardiology returns wrong specialization
+        let resultSpecialization = specialization;
+        if(specialization==="Cardiology") resultSpecialization="Orthopedics"; // defect
+
+        message = "✅ Search executed.<br>Showing doctors of specialization: " + resultSpecialization;
+      }
+
+      document.getElementById('output').innerHTML = message;
+    });
+
+    document.getElementById('listAll').addEventListener('click', function(){
+      document.getElementById('output').innerHTML = "✅ Listing all doctors.";
+    });
+
+    document.getElementById('browseCategory').addEventListener('click', function(){
+      // Intentional defect: No response
+      document.getElementById('output').innerHTML = ""; 
+    });
+
+    document.getElementById('listWomen').addEventListener('click', function(){
+      document.getElementById('output').innerHTML = "✅ Listing all women doctors.";
+    });
+  </script>
+</body>
+</html>
