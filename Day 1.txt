@@ -1,0 +1,63 @@
+Testing
+-----
+--> Process to find deviation from expected Behaviour
+
+--> Software Testing
+--> Software --> Set of Instructions to perform a task
+
+Types of Softwares
+-->System Software --BIOS
+
+---> Desktop Softwares
+---> Web Applications
+---> Mobile Applications
+
+----
+
+Types of Companies
+
+-----
+
+Product based
+----------
+
+Requirements
+
+
+Services based
+
+----> Development Services
+----> Customer Services
+----> Testing Services
+
+Requirements
+--------------
+---> from another company
+
+-----------------------
+
+Developing a Software --->
+
+SDLC -- Software Development Life Cycle
+
+----------------
+
+Requirements ---> Gathered  --> clients or Customer
+
+Example --> Addition of Two numbers
+
+Alogorithm, flow chart
+
+Design -- HLD and LLD 
+
+Coding
+
+testing
+
+Deploy & maintaince
+
+
+---V & V - Model
+
+
+

@@ -1,0 +1,76 @@
+Levels of Testing
+-------------
+Unit/Component Testing -- Developers -Dev enivornment
+
+Integration Testing 
+
+--- Unit/Component Integration Testing -->Developers
+
+--- System Integration Testing  -->Testers
+
+System Testing  - Testers/QA -- QA enivornment
+
+-- Functional testing -- validation of Functionalities or Features
+-- Non-Functional testing -- Focus on the Quality Attributes of Application
+
+
+
+-- responsive
+-- Performance Testing 
+	-- Load Testing - Focus on whether application is working 
+	as expected when provided number of Concurrent users
+	accessing the application
+	-- Stress Testing
+       -- Focus on Breaking the application when number of 
+	concurrent users are more than the prescribed limit
+	-- Spike Testing
+	-- Focus on Testing application behaviour when sudden increase in the number of Concurrent users
+	-- Volume Testing - Focus on the behaviour of the application when it deals with large amount of data
+
+-- Security Testing
+-- User Experience
+-- Accessbilty Testing
+-- Documentation Testing
+-- Compatibility Testing
+
+
+User Acceptance Testing  -- EndUser /Clients
+
+-- Alpha Testing -- Testing at the Developing company
+-- Beta Testing -- Testing at End User end
+
+-------------
+
+Testing LifeCycle
+-------------------
+ Requirements ---> Requirement Gathering
+              ---> Requirement Analysis
+
+Test Strategy & Planning 
+
+Test Development 
+  		--> Test Scenarios (What to Test)
+		--> Test Cases (When to Test)
+
+Test Execution 
+
+Defect Reporting
+
+Test Closure 
+--------------
+
+
+Version:151.0.7922.138
+
+2nd Build of application 
+
+Release Notes: 
+New Features
+Bug Fixes
+
+Smoke, Sanity
+
+Re-testing -- Validate the failed test cases
+
+Regression Testing -- Validate that existing functionality which was working in the previous build after changes in the application 
+(due to new features, Bug fixes) or change in the enviornment

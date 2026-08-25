@@ -1,0 +1,112 @@
+## 🧩 Playground Scenarios & Requirements
+
+### 1. **Form Validation Playground (`index.html`)**
+- **Boundary Value Analysis** → Age field (18–60).  
+- **Equivalence Partitioning** → Email format, password rules.  
+- **Error Guessing** → Empty fields, invalid characters.  
+- **Decision Table Testing** → Payment + Shipping rules (COD + Express invalid).  
+- **State Transition Testing** → Order states (New → Processing → Shipped → Delivered).  
+- **Hidden Defect Injection** → Enterprise plan incorrectly mapped to Pro.  
+
+---
+
+### 2. **Shopping Cart Checkout (`shopping.html`)**
+- **Boundary Value Analysis** → Quantity (1–10).  
+- **Equivalence Partitioning** → Coupon codes starting with `SAVE`.  
+- **Error Guessing** → Empty cart, invalid coupon, skipped selections.  
+- **Decision Table Testing** → Payment + Delivery rules (COD + Same Day invalid).  
+- **State Transition Testing** → Cart → Checkout → Payment → Confirmation.  
+- **Hidden Defect Injection** → Double discount bug at quantity = 10.  
+
+---
+
+### 3. **Login & Role-Based Access (`login.html`)**
+- **Boundary Value Analysis** → Username (5–12 chars), Password (6–10 chars).  
+- **Equivalence Partitioning** → Password must contain digit.  
+- **Error Guessing** → Empty fields, special characters.  
+- **Decision Table Testing** → Role + Credentials rules (Admin requires `@admin`).  
+- **State Transition Testing** → Logged Out → Login Attempt → Logged In → Logout.  
+- **Hidden Defect Injection** → Admin bypass bug (`admin123` grants access).  
+
+---
+
+### 4. **Flight Booking (`flight.html`)**
+- **Boundary Value Analysis** → Passengers (1–5).  
+- **Equivalence Partitioning** → Departure ≠ Arrival city.  
+- **Error Guessing** → Past travel dates, empty fields.  
+- **Decision Table Testing** → Seat class + Payment rules (Business + COD invalid).  
+- **State Transition Testing** → Search → Select Flight → Payment → Confirmation.  
+- **Hidden Defect Injection** → Extra passenger charged at 5.  
+
+---
+
+### 5. **Banking Transaction (`banking.html`)**
+- **Boundary Value Analysis** → Withdrawal (100–10,000).  
+- **Equivalence Partitioning** → Transaction type (Deposit/Withdrawal).  
+- **Error Guessing** → Negative amounts, empty fields.  
+- **Decision Table Testing** → Account type + transaction rules (Savings withdrawal ≤ 5000).  
+- **State Transition Testing** → Active → Transaction → Updated Balance → Closed.  
+- **Hidden Defect Injection** → Withdrawal of 10,000 deducts 11,000.  
+
+---
+
+### 6. **Healthcare Appointment (`healthcare.html`)**
+- **Boundary Value Analysis** → Patient age (1–120).  
+- **Equivalence Partitioning** → Appointment type (General, Specialist, Emergency).  
+- **Error Guessing** → Empty name, past date.  
+- **Decision Table Testing** → Appointment type + slot rules (General + Night invalid).  
+- **State Transition Testing** → Registered → Scheduled → Checked In → Completed.  
+- **Hidden Defect Injection** → Specialist + Afternoon incorrectly booked as General.  
+
+---
+
+### 7. **Exam Registration (`exam.html`)**
+- **Boundary Value Analysis** → Student age (10–25).  
+- **Equivalence Partitioning** → Subject (Math, Science, English).  
+- **Error Guessing** → Empty name, past date.  
+- **Decision Table Testing** → Subject + Exam type rules (Science must be Offline).  
+- **State Transition Testing** → Registered → Payment → Admit Card → Exam Taken.  
+- **Hidden Defect Injection** → Science + Offline incorrectly marked as Online.  
+
+---
+
+### 8. **Hotel Booking (`hotel.html`)**
+- **Boundary Value Analysis** → Nights (1–30).  
+- **Equivalence Partitioning** → Room type (Standard, Deluxe, Suite).  
+- **Error Guessing** → Empty name, past date.  
+- **Decision Table Testing** → Room type + Payment rules (Suite + COD invalid).  
+- **State Transition Testing** → Reserved → Checked In → Checked Out → Completed.  
+- **Hidden Defect Injection** → Nights = 30 charged as 31.  
+
+---
+
+### 9. **Library Borrowing (`library.html`)**
+- **Boundary Value Analysis** → Duration (1–30 days).  
+- **Equivalence Partitioning** → Category (Fiction, Non‑Fiction, Reference).  
+- **Error Guessing** → Empty name, past date.  
+- **Decision Table Testing** → Category + Duration rules (Reference ≤ 7 days).  
+- **State Transition Testing** → Borrowed → Returned → Overdue → Closed.  
+- **Hidden Defect Injection** → Reference duration bug (7 days allowed as 14).  
+
+---
+
+### 10. **Restaurant Reservation (`restaurant.html`)**
+- **Boundary Value Analysis** → Guests (1–20).  
+- **Equivalence Partitioning** → Reservation type (Lunch, Dinner, Private Event).  
+- **Error Guessing** → Empty name, past date.  
+- **Decision Table Testing** → Reservation type + Payment rules (Event + COD invalid).  
+- **State Transition Testing** → Reserved → Seated → Served → Completed.  
+- **Hidden Defect Injection** → Guests = 20 booked as 25.  
+
+---
+
+### 11. **Transport Ticket Booking (`transport.html`)**
+- **Boundary Value Analysis** → Passengers (1–6).  
+- **Equivalence Partitioning** → Route type (Local, Express, Interstate).  
+- **Error Guessing** → Empty name, past date.  
+- **Decision Table Testing** → Route type + Payment rules (Express + COD invalid).  
+- **State Transition Testing** → Booked → Payment → Confirmed → Boarded → Completed.  
+- **Hidden Defect Injection** → Passengers = 6 charged as 7.  
+
+---
+
