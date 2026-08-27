@@ -1,0 +1,54 @@
+Test Scenarios(What to Test)
+---> Features or Functionalities or Flows
+ 	Types of Flow 
+		--> Normal Flow
+		--> Alternative Flow
+		--> Exceptional Flow
+
+Test Cases (How to Test)
+
+---> Web Application -->
+to Validate the home page of the application is displayed
+
+--> Mobile Application/Desktop
+to validate the Application is launched 
+
+Text Boxes
+---> To verify that the given field is a textbox
+---> To validate that given textBox is editable
+
+Radio button
+--> To verify the values displayed as radio button
+--> To validate that no default value is displayed for a radio button
+--> To validate that only one value is selected as Radio button
+
+Check boxes
+---> To verify the values displayed as checkboxes
+---> to validate that no value is selected as default(check requirements)
+--> To validate that one checkbox is selected
+---> To validate that more than one checkbox can be selected.
+
+Drop down
+--> To verify the field is a Drop down
+--> To verify the values displayed in the drop down
+--> To validate that selected value is displayed in the drop down
+
+
+-------
+Defect Life Cycle
+--------------
+
+---New
+--->open for valid defect
+---> in progress
+--> fixed
+---> closed
+-- re-open
+--> duplicate
+---> invalid - not a bug
+---> documented
+---> deferred
+
+
+
+
