@@ -1,0 +1,504 @@
+
+
+##  `pom.xml`
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>java-junit-learning</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- JUnit 4 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+
+---
+
+##  Basics
+
+### `HelloWorld.java`
+```java
+package com.example.basics;
+
+// Simple Java program
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+
+    public String greet(String name) {
+        return "Hello, " + name;
+    }
+}
+```
+
+### `HelloWorldTest.java`
+```java
+package com.example.basics;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class HelloWorldTest {
+    @Test
+    void testGreet() {
+        HelloWorld hw = new HelloWorld();
+        assertEquals("Hello, Alice", hw.greet("Alice"));
+    }
+}
+```
+
+### `ArrayUtils.java`
+```java
+package com.example.basics;
+
+//  Demonstrates control structures, arrays, loops
+public class ArrayUtils {
+    public static int findMax(int[] arr) {
+        int max = arr[0];
+        for (int val : arr) {
+            if (val > max) max = val;
+        }
+        return max;
+    }
+
+    public static int sum2D(int[][] matrix) {
+        int sum = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                sum += matrix[i][j];
+            }
+        }
+        return sum;
+    }
+}
+```
+
+### `ArrayUtilsTest.java`
+```java
+package com.example.basics;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ArrayUtilsTest {
+    @Test
+    void testFindMax() {
+        int[] arr = {1, 5, 3, 9, 2};
+        assertEquals(9, ArrayUtils.findMax(arr));
+    }
+
+    @Test
+    void testSum2D() {
+        int[][] matrix = {{1,2}, {3,4}};
+        assertEquals(10, ArrayUtils.sum2D(matrix));
+    }
+}
+```
+
+---
+
+##  Utils
+
+### `Calculator.java`
+```java
+package com.example.utils;
+
+public class Calculator {
+    public int add(int a, int b) { return a + b; }
+    public int subtract(int a, int b) { return a - b; }
+    public int divide(int a, int b) {
+        if (b == 0) throw new ArithmeticException("Divide by zero");
+        return a / b;
+    }
+}
+```
+
+### `CalculatorTestJUnit4.java`
+```java
+package com.example.utils;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class CalculatorTestJUnit4 {
+    @Test
+    public void testAddition() {
+        assertEquals(5, new Calculator().add(2, 3));
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void testDivideByZero() {
+        new Calculator().divide(10, 0);
+    }
+
+    @Test(timeout = 1000)
+    public void testTimeout() throws InterruptedException {
+        Thread.sleep(500);
+    }
+
+    @org.junit.Ignore("Feature not ready")
+    @Test
+    public void testFutureFeature() {
+        fail("Ignored test");
+    }
+}
+```
+
+### `CalculatorTestJUnit5.java`
+```java
+package com.example.utils;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.time.Duration;
+
+class CalculatorTestJUnit5 {
+    @Test
+    void testAddition() {
+        assertEquals(5, new Calculator().add(2, 3));
+    }
+
+    @Test
+    void testDivideByZero() {
+        assertThrows(ArithmeticException.class, () -> new Calculator().divide(10, 0));
+    }
+
+    @Test
+    void testTimeout() {
+        assertTimeout(Duration.ofMillis(1000), () -> Thread.sleep(500));
+    }
+
+    @org.junit.jupiter.api.Disabled("Feature not ready")
+    @Test
+    void testFutureFeature() {
+        fail("Disabled test");
+    }
+}
+```
+
+### `StringUtils.java`
+```java
+package com.example.utils;
+
+public class StringUtils {
+    public static boolean isPalindrome(String input) {
+        if (input == null) return false;
+        String cleaned = input.replaceAll("\\s+", "").toLowerCase();
+        return new StringBuilder(cleaned).reverse().toString().equals(cleaned);
+    }
+
+    public static String reverse(String input) {
+        if (input == null) return null;
+        return new StringBuilder(input).reverse().toString();
+    }
+}
+```
+
+### `StringUtilsTestJUnit4.java`
+```java
+package com.example.utils;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class StringUtilsTestJUnit4 {
+    @Test
+    public void testPalindrome() {
+        assertTrue(StringUtils.isPalindrome("madam"));
+        assertTrue(StringUtils.isPalindrome("Race car"));
+        assertFalse(StringUtils.isPalindrome("hello"));
+    }
+
+    @Test
+    public void testReverse() {
+        assertEquals("olleh", StringUtils.reverse("hello"));
+        assertNull(StringUtils.reverse(null));
+    }
+}
+```
+
+### `StringUtilsTestJUnit5.java`
+```java
+package com.example.utils;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class StringUtilsTestJUnit5 {
+    @Test
+    void testPalindrome() {
+        assertTrue(StringUtils.isPalindrome("madam"));
+        assertTrue(StringUtils.isPalindrome("Race car"));
+        assertFalse(StringUtils.isPalindrome("hello"));
+    }
+
+    @Test
+    void testReverse() {
+        assertEquals("olleh", StringUtils.reverse("hello"));
+        assertNull(StringUtils.reverse(null));
+    }
+}
+```
+
+### `StringUtilsParameterizedTestJUnit4.java`
+```java
+package com.example.utils;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import java.util.Arrays;
+import java.util.Collection;
+import static org.junit.Assert.*;
+
+@RunWith(Parameterized.class)
+public class StringUtilsParameterizedTestJUnit4 {
+    private final String input;
+    private final boolean expected;
+
+    public StringUtilsParameterizedTestJUnit4(String input, boolean expected) {
+        this.input = input; this.expected = expected;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+            {"madam", true}, {"Race car", true}, {"hello", false}, {"", true}, {null, false}
+        });
+    }
+
+    @Test
+    public void testIsPalindrome() {
+        assertEquals(expected, StringUtils.isPalindrome(input));
+    }
+}
+```
+
+### `StringUtilsParameterizedTestJUnit5.java`
+```java
+package com.example.utils;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+class StringUtilsParameterizedTestJUnit5 {
+    @ParameterizedTest
+    @CsvSource({ "madam,true", "hello,false", "'',true" })
+    void testPalindrome(String input, boolean expected) {
+        assertEquals(expected, StringUtils.isPalindrome(input));
+    }
+}
+```
+
+---
+
+##  OOP
+
+### `PersonTest.java` 
+```java
+package com.example.oop;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class PersonTest {
+    @Test
+    void testConstructorAndGetters() {
+        Person p = new Person("Alice", 25);
+        assertEquals("Alice", p.getName());
+        assertEquals(25, p.getAge());
+    }
+
+    @Test
+    void testSetName() {
+        Person p = new Person("Bob", 30);
+        p.setName("Charlie");
+        assertEquals("Charlie", p.getName());
+    }
+}
+```
+
+---
+
+### `ShapeTest.java`
+```java
+package com.example.oop;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ShapeTest {
+    @Test
+    void testCircleArea() {
+        Shape c = new Circle(2.0);
+        assertEquals(Math.PI * 4.0, c.area(), 0.001);
+    }
+}
+```
+
+---
+
+### `AbstractShapeTest.java`
+```java
+package com.example.oop;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AbstractShapeTest {
+    @Test
+    void testRectangleArea() {
+        AbstractShape r = new Rectangle(3, 4);
+        assertEquals(12.0, r.area());
+        assertEquals("This is a shape.", r.describe());
+    }
+}
+```
+
+---
+
+### `OuterClassTest.java`
+```java
+package com.example.oop;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class OuterClassTest {
+    @Test
+    void testInnerClassMessage() {
+        OuterClass outer = new OuterClass();
+        OuterClass.InnerClass inner = outer.new InnerClass();
+        assertEquals("Hello from Outer + Inner", inner.getMessage());
+    }
+}
+```
+
+---
+
+## Exceptions
+
+### `CustomExceptionTest.java`
+```java
+package com.example.exceptions;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class CustomExceptionTest {
+    @Test
+    void testThrowCustomException() {
+        Exception ex = assertThrows(CustomException.class, () -> {
+            throw new CustomException("Custom error occurred");
+        });
+        assertEquals("Custom error occurred", ex.getMessage());
+    }
+}
+```
+
+---
+
+### `FileReaderExampleTest.java`
+```java
+package com.example.exceptions;
+
+import org.junit.jupiter.api.Test;
+import java.io.FileWriter;
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.*;
+
+class FileReaderExampleTest {
+    @Test
+    void testReadFirstLine() throws IOException {
+        String path = "testfile.txt";
+        try (FileWriter fw = new FileWriter(path)) {
+            fw.write("First line\nSecond line");
+        }
+        String line = FileReaderExample.readFirstLine(path);
+        assertEquals("First line", line);
+    }
+}
+```
+
+---
+
+## Suites
+
+### `AllTestsJUnit4.java`
+```java
+package com.example;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import com.example.utils.CalculatorTestJUnit4;
+import com.example.utils.StringUtilsTestJUnit4;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    CalculatorTestJUnit4.class,
+    StringUtilsTestJUnit4.class
+})
+public class AllTestsJUnit4 {
+    //  JUnit 4 suite groups multiple test classes
+}
+```
+
+---
+
+### `AllTestsJUnit5.java`
+```java
+package com.example;
+
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+import com.example.utils.CalculatorTestJUnit5;
+import com.example.utils.StringUtilsTestJUnit5;
+
+@Suite
+@SelectClasses({
+    CalculatorTestJUnit5.class,
+    StringUtilsTestJUnit5.class
+})
+public class AllTestsJUnit5 {
+     JUnit 5 suite groups multiple test classes
+}
+```
+
+---
+
+
+
